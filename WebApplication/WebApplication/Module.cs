@@ -6,13 +6,7 @@ namespace WebApplication
     {
         public Module()
         {
-            Get["/"] = parameter =>
-            {
-                using (var userDb = new WebApplication.Contexts.MainContext())
-                {
-                    
-                }
-            };
+            Get["/"] = parameter => "Hello!";
         }
     }
 }
