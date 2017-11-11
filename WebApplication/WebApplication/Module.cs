@@ -6,7 +6,22 @@ namespace WebApplication
     {
         public Module()
         {
-            Get["/"] = parameter => "Hello!";
+            Get["/"] = parameter =>
+            {
+                using (var userDb = new WebApplication.Contexts.MainContext())
+                {
+                    userDb.Users.Add(new Models.ModelUser{UserName = "FantyG"});
+                    userDb.Users.Add(new Models.ModelUser { UserName = "Aleksa14" });
+                    userDb.SaveChanges();
+
+                    string res = "";
+                    foreach (var user in userDb.Users)
+                    {
+                        res += user.UserName + " " + user.UserId + " ";
+                    }
+                    return res;
+                }
+            };
         }
     }
 }
