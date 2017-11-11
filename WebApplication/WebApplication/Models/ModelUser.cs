@@ -18,7 +18,7 @@ namespace WebApplication.Models
         [Index(IsUnique = true)]
         public string UserName { get; set; }
         [Index(IsUnique = true)]
-        public string Mail { get; set; }
+        public string Email { get; set; }
         public string PasswordHash { get; set; }
         public UserRoleType UserRole { get; set; } = UserRoleType.NormalUser;
     }
