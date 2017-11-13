@@ -121,10 +121,11 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Contexts\MainContext.cs" />
+    <Compile Include="Exeptions\InDataError.cs" />
     <Compile Include="Exeptions\UserCreationExeption.cs" />
-    <Compile Include="Migrations\201711111454115_User.cs" />
-    <Compile Include="Migrations\201711111454115_User.Designer.cs">
-      <DependentUpon>201711111454115_User.cs</DependentUpon>
+    <Compile Include="Migrations\201711132250313_User.cs" />
+    <Compile Include="Migrations\201711132250313_User.Designer.cs">
+      <DependentUpon>201711132250313_User.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ModelUser.cs" />
@@ -133,11 +134,10 @@
     <Compile Include="Services\ServiceUser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711111454115_User.resx">
-      <DependentUpon>201711111454115_User.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711132250313_User.resx">
+      <DependentUpon>201711132250313_User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

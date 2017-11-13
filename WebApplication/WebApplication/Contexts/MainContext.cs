@@ -9,6 +9,10 @@ namespace WebApplication.Contexts
 {
     public class MainContext : DbContext
     {
+        public MainContext() : base("MainDb")
+        {
+        }
+
         public DbSet<ModelUser> Users { get; set; }
     }
 }
