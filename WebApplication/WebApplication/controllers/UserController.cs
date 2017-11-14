@@ -27,8 +27,8 @@ namespace WebApplication.controllers
 
         public UserController()
         {
-            Post["/users/{username}"] = PostUser;
-            Post["user-auth"] = AuthenticateUser;
+            Post["/api/users/{username}"] = PostUser;
+            Post["/api/user-auth"] = AuthenticateUser;
         }
 
         private dynamic AuthenticateUser(dynamic parameters)
