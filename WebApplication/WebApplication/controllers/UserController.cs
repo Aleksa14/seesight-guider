@@ -13,7 +13,7 @@ namespace WebApplication.controllers
 {
     public class UserController : NancyModule
     {
-        private class PostUserBody
+        private struct PostUserBody
         {
             public string Password { get; set; }
             public string Email { get; set; }
@@ -64,10 +64,14 @@ namespace WebApplication.controllers
             try
             {
                 postBody = this.Bind<PostUserBody>();
+                if (postBody.Email == null || postBody.Password == null)
+                {
+                    throw new Exception();
+                }
             }
-            catch (Nancy.ModelBinding.ModelBindingException)
+            catch (Exception)
             {
-                return Response.AsJson(new Exeptions.UserCreationExeption{ErrorMessage = "Body not completed"}, HttpStatusCode.BadRequest);
+                return Response.AsJson("Body not completed", HttpStatusCode.BadRequest);
             }
             try
             {
