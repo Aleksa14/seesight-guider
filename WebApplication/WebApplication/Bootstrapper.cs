@@ -1,5 +1,6 @@
 ﻿using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.Session;
 using Nancy.TinyIoc;
 
 namespace WebApplication
@@ -8,7 +9,7 @@ namespace WebApplication
     {
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            // your customization goes here
+            CookieBasedSessions.Enable(pipelines);
         }
 
     }
