@@ -128,6 +128,7 @@
       <DependentUpon>201711132250313_User.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelPlace.cs" />
     <Compile Include="Models\ModelUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServiceUser.cs" />
