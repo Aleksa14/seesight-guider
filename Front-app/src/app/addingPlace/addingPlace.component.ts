@@ -25,7 +25,7 @@ export class AddingPlaceComponent {
                 this.router.navigate(['/searching']);
             },
             error => {
-                this.alertService.error(error.message);
+                this.alertService.error(error.json.message);
                 this.loading = false;
             }
         )

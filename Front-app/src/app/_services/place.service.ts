@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response, RequestMethod, Request } from '@angular/http';
+import {Http, Headers, RequestOptions, Response, RequestMethod, Request, URLSearchParams} from '@angular/http';
 
 import {Place} from "../_models/index";
 
@@ -20,24 +20,28 @@ export class PlaceService {
     add(place: Place) {
         let options = new RequestOptions({
             method: RequestMethod.Put,
-            url: this.host ,
+            url: this.host + 'api/places',
             headers: this.getHeader(),
             body: JSON.stringify(place)
         });
         return this.http.request(new Request(options));
     }
 
-    getPlaces(word: String){
+    getPlaces(word: string){
+        let params: URLSearchParams = new URLSearchParams();
+        params.set("name", word);
         var options = new RequestOptions({
             method: RequestMethod.Get,
-            url: this.host,
-            headers: this.getHeader()
+            url: this.host + 'api/places',
+            headers: this.getHeader(),
+            search: params
         });
         return this.http.request(new Request(options))
             .map((response: Response) => response.json());
     }
 
     getPlace(id: number){
+
         var options = new RequestOptions({
             method: RequestMethod.Get,
             url: this.host,

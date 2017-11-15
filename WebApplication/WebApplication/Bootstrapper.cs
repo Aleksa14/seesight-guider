@@ -14,7 +14,9 @@ namespace WebApplication
             {
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
                     .WithHeader("Access-Control-Allow-Methods", "POST,GET, PUT, DELETE")
-                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type");
+                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type")
+                    .WithHeader("Access-Control-Expose-Headers", "Accept, Origin, Content-type")
+                    .WithHeader("Access-Control-Allow-Credentials", "true");
             });
         }
 
