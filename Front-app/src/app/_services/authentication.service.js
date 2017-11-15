@@ -12,19 +12,19 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
 var AuthenticationService = (function () {
-    //host = " ";
     function AuthenticationService(http) {
         this.http = http;
+        this.host = "http://localhost:56658/";
     }
-    AuthenticationService.prototype.login = function (username, password) {
+    AuthenticationService.prototype.login = function (user) {
         var header = new http_1.Headers();
         header.append("Content-Type", "application/json");
         header.append("Accept", "application/json");
         var option = new http_1.RequestOptions({
             method: http_1.RequestMethod.Post,
-            url: /*this.host +*/ '/user-auth',
+            url: this.host + 'api/user-auth',
             headers: header,
-            body: JSON.stringify({ username: username, password: password }),
+            body: JSON.stringify({ username: user.username, password: user.password }),
         });
         return this.http.request(new http_1.Request(option))
             .map(function (response) {

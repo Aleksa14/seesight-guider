@@ -10,7 +10,6 @@ import { AlertService, AuthenticationService } from '../_services/index';
 export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
-    returnUrl: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -21,17 +20,14 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
+        this.authenticationService.login(this.model)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate(['/searching']);
                 },
                 error => {
                     this.alertService.error(error);

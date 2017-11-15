@@ -2,11 +2,15 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand">Sight Seeing Guider</a>
+            <a *ngIf="!isVisible()" class="navbar-brand">{{user.userName}}</a>
         </div>
         <ul class="nav navbar-nav">
-            <li [routerLinkActive]="['active']"><a>Home</a></li>
-            <li [routerLinkActive]="['active']"><a [routerLink]="['/login']">Login</a></li>
-            <li [routerLinkActive]="['active']"><a [routerLink]="['/register']">Register</a></li>
+            <li *ngIf="isVisible()" [routerLinkActive]="['active']"><a [routerLink]="['/login']">Login</a></li>
+            <li *ngIf="isVisible()" [routerLinkActive]="['active']"><a [routerLink]="['/register']">Register</a></li>
+            <li *ngIf="!isVisible()" [routerLinkActive]="['active']"><a [routerLink]="['/searching']">Search</a></li>
+            <li *ngIf="!isVisible()" [routerLinkActive]="['active']"><a [routerLink]="['/adding']">Add place</a></li>
+            <li *ngIf="!isVisible()" [routerLinkActive]="['active']"><a [routerLink]="['/login']"><span
+                    class="glyphicon glyphicon-log-out"></span>Logout</a></li>
         </ul>
     </div>
 </nav>

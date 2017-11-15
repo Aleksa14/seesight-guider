@@ -9,24 +9,30 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { NavbarComponent } from './navbar/index';
 import { AlertComponent } from './_directives/index';
+import { SearchComponent } from './search/index';
 import { AuthGuard } from "./_guards/index";
-import { UserService, AuthenticationService, AlertService } from "./_services/index";
+import { UserService, AuthenticationService, AlertService, PlaceService } from "./_services/index";
+import {AddingPlaceComponent} from "./addingPlace/addingPlace.component";
+
 
 @NgModule({
   imports:      [ BrowserModule,
                   FormsModule,
                   ReactiveFormsModule,
                   HttpModule,
-                  routing ],
+                  routing],
   declarations: [ AppComponent,
                   LoginComponent,
                   RegisterComponent,
                   NavbarComponent,
-                  AlertComponent ],
+                  AlertComponent,
+                  SearchComponent,
+                  AddingPlaceComponent],
   providers: [ AuthGuard,
                 AlertService,
                 AuthenticationService,
-                UserService ],
+                UserService,
+                PlaceService],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

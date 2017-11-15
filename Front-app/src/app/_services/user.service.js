@@ -11,23 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var UserService = (function () {
-    //host = "";
     function UserService(http) {
         this.http = http;
+        this.host = "http://localhost:56658/";
     }
     UserService.prototype.getHeader = function () {
         var header = new http_1.Headers();
         header.append("Content-Type", "application/json");
+        header.append("Accept", "application/json");
         return header;
     };
     UserService.prototype.create = function (user) {
         var options = new http_1.RequestOptions({
             method: http_1.RequestMethod.Post,
-            url: /*this.host +*/ 'users/' + user.username,
+            url: this.host + 'api/users/' + user.username,
             headers: this.getHeader(),
-            body: JSON.stringify(user)
+            body: JSON.stringify({ password: user.password, email: user.email })
         });
-        return this.http.request(new http_1.Request(options)).map(function (response) { return response.json(); });
+        return this.http.request(new http_1.Request(options));
     };
     return UserService;
 }());

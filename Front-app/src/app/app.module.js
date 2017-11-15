@@ -15,8 +15,10 @@ var index_1 = require("./login/index");
 var index_2 = require("./register/index");
 var index_3 = require("./navbar/index");
 var index_4 = require("./_directives/index");
-var index_5 = require("./_guards/index");
-var index_6 = require("./_services/index");
+var index_5 = require("./search/index");
+var index_6 = require("./_guards/index");
+var index_7 = require("./_services/index");
+var addingPlace_component_1 = require("./addingPlace/addingPlace.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,11 +35,14 @@ AppModule = __decorate([
             index_1.LoginComponent,
             index_2.RegisterComponent,
             index_3.NavbarComponent,
-            index_4.AlertComponent],
-        providers: [index_5.AuthGuard,
-            index_6.AlertService,
-            index_6.AuthenticationService,
-            index_6.UserService],
+            index_4.AlertComponent,
+            index_5.SearchComponent,
+            addingPlace_component_1.AddingPlaceComponent],
+        providers: [index_6.AuthGuard,
+            index_7.AlertService,
+            index_7.AuthenticationService,
+            index_7.UserService,
+            index_7.PlaceService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

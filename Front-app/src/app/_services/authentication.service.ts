@@ -1,24 +1,25 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions, RequestMethod, Request } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../_models/index';
 import 'rxjs/add/operator/map'
 
 @Injectable()
 export class AuthenticationService {
 
-    //host = " ";
+    host = "http://localhost:56658/";
 
     constructor(private http: Http) { }
 
-    login(username: string, password: string) {
+    login(user: User) {
         var header = new Headers();
         header.append("Content-Type", "application/json");
         header.append("Accept", "application/json");
         var option = new RequestOptions({
             method: RequestMethod.Post,
-            url: /*this.host +*/ '/user-auth',
+            url: this.host + 'api/user-auth',
             headers: header,
-            body: JSON.stringify({username: username, password: password}),
+            body: JSON.stringify({username: user.username, password: user.password}),
         });
         return this.http.request(new Request(option))
             .map((response: Response) => {
