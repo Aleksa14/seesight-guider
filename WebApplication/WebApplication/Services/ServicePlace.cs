@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebApplication.Contexts;
+using WebApplication.Migrations;
 using WebApplication.Models;
 
-namespace WebApplication.Services
-{
+namespace WebApplication.Service
+{ 
     public class ServicePlace
     {
-        public static ModelPlace CreatePlace(string name, string description, string address, ModelUser loggedUser)
-        {
-            using (var db = new MainContext())
-            {
+        public static ModelPlace CreatePlace(string name, string description, string address, ModelUser loggedUser, MainContext db)
+        {       
                 var place = new ModelPlace
                 {
                     Name = name,
@@ -24,20 +23,18 @@ namespace WebApplication.Services
                 db.Places.Add(place);
                 db.SaveChanges();
                 return place;
-            }
         }
 
-        public static IEnumerable<ModelPlace> GetAllPlaces()
+        public static IEnumerable<ModelPlace> GetAllPlaces(MainContext db)
         {
-            using (var db = new MainContext())
-            {
                 return db.Places;
-            }
         }
 
-        public static IEnumerable<ModelPlace> GetAllPlacesMatchingName(string nameFragment)
+        public static IEnumerable<ModelPlace> GetAllPlacesMatchingName(string nameFragment, MainContext db)
         {
-            return from place in GetAllPlaces() where place.Name.Contains(nameFragment) select place;
+            return from place in GetAllPlaces(db) where place.Name.Contains(nameFragment) select place;
         }
+
+
     }
 }

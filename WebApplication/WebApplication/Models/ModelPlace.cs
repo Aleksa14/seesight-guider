@@ -15,6 +15,6 @@ namespace WebApplication.Models
         public string Description { get; set; }
         public double Rate { get; set; } = .0;
         public string Address { get; set; }
-        public ModelUser Author { get; set; }
+        public virtual ModelUser Author { get; set; }
     }
 }
