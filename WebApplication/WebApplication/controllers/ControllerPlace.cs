@@ -67,10 +67,12 @@ namespace WebApplication.Controllers
         {
             try
             {
+                Console.WriteLine("Jeszcze nie dupa");
                 var userName = (string) this.Request.Session[ControllerUser.SessionUserNameKey];
                 if (string.IsNullOrEmpty(userName))
                 {
-                    return Response.AsJson("Noone logged in.", HttpStatusCode.Unauthorized);
+                    Console.WriteLine("No i dupa");
+                    return Response.AsJson("Noone logged in.", HttpStatusCode.NotFound);
                 }
                 var db = new MainContext();
                 var user = ServiceUser.GetLoggedUser(userName, db);

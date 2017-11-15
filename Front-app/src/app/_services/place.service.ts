@@ -22,9 +22,11 @@ export class PlaceService {
             method: RequestMethod.Put,
             url: this.host + 'api/places',
             headers: this.getHeader(),
-            body: JSON.stringify(place)
+            body: JSON.stringify(place),
+            withCredentials: true
         });
-        return this.http.request(new Request(options));
+        return this.http.request(new Request(options))
+            .map((response: Response) => response.json());
     }
 
     getPlaces(word: string){

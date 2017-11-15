@@ -13,7 +13,7 @@
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !location.valid }">
             <label for="location">Location</label>
-            <input type="text" class="form-control" name="location" [(ngModel)]="model.location" #location="ngModel" required />
+            <input type="text" class="form-control" name="address" [(ngModel)]="model.location" #location="ngModel" required />
             <div *ngIf="f.submitted && !location.valid" class="help-block">Location is required</div>
         </div>
         <div class="form-group">
