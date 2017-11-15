@@ -119,8 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="controllers\ControllerPlace.cs" />
-    <Compile Include="controllers\UserController.cs" />
+    <Compile Include="Controllers\ControllerPlace.cs" />
+    <Compile Include="Controllers\ControllerUser.cs" />
     <Compile Include="Contexts\MainContext.cs" />
     <Compile Include="Exeptions\InDataError.cs" />
     <Compile Include="Exeptions\UserCreationExeption.cs" />
