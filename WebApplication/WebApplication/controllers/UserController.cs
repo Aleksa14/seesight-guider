@@ -7,12 +7,16 @@ using System.Web;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.ModelBinding.DefaultBodyDeserializers;
+using WebApplication.Contexts;
 using WebApplication.Exeptions;
+using WebApplication.Models;
 
 namespace WebApplication.controllers
 {
+
     public class UserController : NancyModule
     {
+        public const string SessionUserNameKey = "username";
         private struct PostUserBody
         {
             public string Password { get; set; }
@@ -46,14 +50,15 @@ namespace WebApplication.controllers
             {
                 return Response.AsJson("Already logged.");
             }
-            var user = Services.ServiceUser.AuthorizeUser(postBody.UserName, postBody.Password);
+            var db = new MainContext();
+            var user = Services.ServiceUser.AuthorizeUser(postBody.UserName, postBody.Password, db);
             if (user == null)
             {
                 return HttpStatusCode.Unauthorized;
             }
 
-            Request.Session["username"] = user.UserName;
-            return Response.AsJson(user);
+            Request.Session[SessionUserNameKey] = user.UserName;
+            return Response.AsJson(new ViewModelUser(user));
             
         }
 
@@ -75,7 +80,8 @@ namespace WebApplication.controllers
             }
             try
             {
-                Services.ServiceUser.CreateUser(userName, postBody.Email, postBody.Password);
+                var db = new MainContext();
+                Services.ServiceUser.CreateUser(userName, postBody.Email, postBody.Password, db);
             }
             catch (Exeptions.UserCreationExeption exc)
             {

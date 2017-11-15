@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Web;
 using WebApplication.Contexts;
+using WebApplication.Exeptions;
+using WebApplication.Models;
 
 namespace WebApplication.Services
 {
@@ -15,43 +17,53 @@ namespace WebApplication.Services
         private const int HashSize = 20;
         private const int HashAndSaltSize = SaltSize + HashSize;
 
-        public static void CreateUser(string userName, string email, string password)
+        public static void CreateUser(string userName, string email, string password, MainContext db)
         {
             var passwordHash = GeneratePasswordHash(password);
-            var user = new Models.ModelUser { UserName = userName, PasswordHash = passwordHash, Email = email };
-            using (var context = new Contexts.MainContext())
+            var user = new Models.ModelUser {UserName = userName, PasswordHash = passwordHash, Email = email};
+            try
             {
-                try
-                {
-                    context.Users.Add(user);
-                    context.SaveChanges();
-                }
-                catch (System.Data.Entity.Infrastructure.DbUpdateException)
-                {
-                    throw new WebApplication.Exeptions.UserCreationExeption {ErrorMessage = "Email or username already exists." };
-                }
+                db.Users.Add(user);
+                db.SaveChanges();
             }
-            
+            catch (System.Data.Entity.Infrastructure.DbUpdateException)
+            {
+                throw new WebApplication.Exeptions.UserCreationExeption
+                {
+                    ErrorMessage = "Email or username already exists."
+                };
+            }
         }
 
-        public static Models.ModelUser AuthorizeUser(string userName, string password)
+        public static ModelUser GetLoggedUser(string userName, MainContext db)
         {
-            using (var context = new Contexts.MainContext())
+            var matchingUsers = from user in db.Users where user.UserName == userName select user;
+            if (!matchingUsers.Any())
             {
-                var namedUsers = from user in context.Users
-                                 where user.UserName == userName
-                                 select user;
-                if (!namedUsers.Any())
-                {
-                    return null;
-                }
-                if (namedUsers.Count() > 1)
-                {
-                    throw new WebApplication.Exeptions.InDataError();
-                }
-
-                return CheckPassword(password, namedUsers.First().PasswordHash) ? namedUsers.First() : null;
+                return null;
             }
+            if (matchingUsers.Count() > 1)
+            {
+                throw new InDataError();
+            }
+            return matchingUsers.First();
+        }
+
+        public static Models.ModelUser AuthorizeUser(string userName, string password, MainContext db)
+        {
+            var namedUsers = from user in db.Users
+                where user.UserName == userName
+                select user;
+            if (!namedUsers.Any())
+            {
+                return null;
+            }
+            if (namedUsers.Count() > 1)
+            {
+                throw new WebApplication.Exeptions.InDataError();
+            }
+
+            return CheckPassword(password, namedUsers.First().PasswordHash) ? namedUsers.First() : null;
         }
 
         private static string GeneratePasswordHash(string password)

@@ -21,5 +21,6 @@ namespace WebApplication.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public UserRoleType UserRole { get; set; } = UserRoleType.NormalUser;
+        public virtual ICollection<ModelPlace> OwnedPlaces { get; set; } = new HashSet<ModelPlace>();
     }
 }

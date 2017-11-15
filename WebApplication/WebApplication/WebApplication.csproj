@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="controllers\ControllerPlace.cs" />
     <Compile Include="controllers\UserController.cs" />
     <Compile Include="Contexts\MainContext.cs" />
     <Compile Include="Exeptions\InDataError.cs" />
@@ -127,14 +128,32 @@
     <Compile Include="Migrations\201711132250313_User.Designer.cs">
       <DependentUpon>201711132250313_User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711151857481_Users.cs" />
+    <Compile Include="Migrations\201711151857481_Users.Designer.cs">
+      <DependentUpon>201711151857481_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711151917496_SomeFix.cs" />
+    <Compile Include="Migrations\201711151917496_SomeFix.Designer.cs">
+      <DependentUpon>201711151917496_SomeFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelPlace.cs" />
     <Compile Include="Models\ModelUser.cs" />
+    <Compile Include="Models\ViewModelPlace.cs" />
+    <Compile Include="Models\ViewModelUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ServicePlace.cs" />
     <Compile Include="Services\ServiceUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711132250313_User.resx">
       <DependentUpon>201711132250313_User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711151857481_Users.resx">
+      <DependentUpon>201711151857481_Users.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711151917496_SomeFix.resx">
+      <DependentUpon>201711151917496_SomeFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
