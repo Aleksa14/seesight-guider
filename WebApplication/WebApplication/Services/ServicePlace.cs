@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebApplication.Contexts;
+using WebApplication.Exeptions;
 using WebApplication.Migrations;
 using WebApplication.Models;
 
@@ -23,6 +24,23 @@ namespace WebApplication.Service
                 db.Places.Add(place);
                 db.SaveChanges();
                 return place;
+        }
+
+        public static ModelPlace GetPlaceById(int? id, MainContext db)
+        {
+            var places =
+                from place in db.Places
+                where place.PlaceId == id
+                select place;
+            if (!places.Any())
+            {
+                return null;
+            }
+            if (places.Count() > 1)
+            {
+                throw new InDataError();
+            }
+            return places.First();
         }
 
         public static IEnumerable<ModelPlace> GetAllPlaces(MainContext db)
