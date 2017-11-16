@@ -33,11 +33,7 @@ namespace WebApplication.Controllers
         {
             try
             {
-                var placeId = (int?) parameters.id;
-                if (placeId == null)
-                {
-                    return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
-                }
+                var placeId = (int) parameters.id;
                 var db = new MainContext();
                 var place = ServicePlace.GetPlaceById(placeId, db);
                 return place == null ? Response.AsJson("There is no such place.", HttpStatusCode.NotFound) : Response.AsJson(new ViewModelPlace(place));

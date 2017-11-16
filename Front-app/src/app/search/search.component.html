@@ -18,8 +18,8 @@
             </thead>
             <tbody>
             <tr *ngFor="let p of placeTable">
-                <td [routerLink]="['/place/', p.id]">{{p.name}}</td>
-                <td [routerLink]="['/place/', p.id]">{{p.address}}</td>
+                <td [routerLink]="['/place/', p.placeId]">{{p.name}}</td>
+                <td [routerLink]="['/place/', p.placeId]">{{p.address}}</td>
             </tr>
             </tbody>
         </table>
