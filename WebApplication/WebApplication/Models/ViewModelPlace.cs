@@ -15,6 +15,9 @@ namespace WebApplication.Models
             this.Address = place.Address;
             this.Rate = place.Rate;
             this.Author = place.Author.UserName;
+            this.PhotosId =
+                from photo in place.Photos
+                select photo.PhotoId;
         }
 
         public int PlaceId { get; set; }
@@ -23,5 +26,6 @@ namespace WebApplication.Models
         public double Rate { get; set; } = .0;
         public string Address { get; set; }
         public string Author { get; set; }
+        public IEnumerable<int> PhotosId { get; set; }
     }
 }

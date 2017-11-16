@@ -16,5 +16,6 @@ namespace WebApplication.Models
         public double Rate { get; set; } = .0;
         public string Address { get; set; }
         public virtual ModelUser Author { get; set; }
+        public virtual ICollection<ModelPhoto> Photos { get; set; } = new HashSet<ModelPhoto>();
     }
 }

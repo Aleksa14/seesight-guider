@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Nancy;
@@ -25,8 +26,19 @@ namespace WebApplication.Controllers
         {
             Get["/api/places"] = GetPlaces;
             Get["/api/places/{id}"] = GetPlacesId;
+            Put["/api/places/{id}/photos"] = PutPhoto;
             Put["/api/places"] = PutPlace;
             
+        }
+
+        private dynamic PutPhoto(dynamic parameters)
+        {
+            var photo = this.Request.Files.FirstOrDefault();
+            var placeId = parameters.id;
+            var db = new MainContext();
+            var place = ServicePlace.GetPlaceById(placeId, db);
+            var modelPhoto = ServicePlace.AddPhoto(place, photo, db);
+            return Response.AsJson((ModelPhoto.View)modelPhoto.GetView());
         }
 
         private dynamic GetPlacesId(dynamic parameters)
