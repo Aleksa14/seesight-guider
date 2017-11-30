@@ -26,7 +26,7 @@ namespace WebApplication.Models
             public double Rate { get; set; }
             public string Address { get; set; }
             public string Author { get; set; }
-            public IEnumerable<int> PhotosId { get; set; }
+            public IEnumerable<ModelPhoto.View> Photos { get; set; }
         }
 
         public View GetView()
@@ -38,7 +38,7 @@ namespace WebApplication.Models
                 Author = Author.UserName,
                 Description = Description,
                 Name = Name,
-                PhotosId = from photo in Photos select photo.PhotoId,
+                Photos = from photo in Photos select photo.GetView(),
                 Rate = Rate
             };
         }

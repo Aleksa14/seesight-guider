@@ -123,6 +123,7 @@
     <Compile Include="Controllers\ControllerUser.cs" />
     <Compile Include="Contexts\MainContext.cs" />
     <Compile Include="Exeptions\InDataError.cs" />
+    <Compile Include="Exeptions\NotContaining.cs" />
     <Compile Include="Exeptions\UserCreationExeption.cs" />
     <Compile Include="Migrations\201711132250313_User.cs" />
     <Compile Include="Migrations\201711132250313_User.Designer.cs">

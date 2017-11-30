@@ -31,8 +31,42 @@ namespace WebApplication.Controllers
         {
             Get["/api/places"] = GetPlaces;
             Get["/api/places/{id}"] = GetPlacesId;
+            Get["/api/places/{id}/photos/{photoId}"] = GetPhotoById;
             Put["/api/places/{id}/photos"] = PutPhoto;
             Put["/api/places"] = PutPlace;
+        }
+
+        private dynamic GetPhotoById(dynamic parameters)
+        {
+            try
+            {
+                var placeId = (int?) parameters.id;
+                if (placeId == null)
+                {
+                    return Response.AsJson("Wrong place id.", HttpStatusCode.BadRequest);
+                }
+                var photoId = (int?) parameters.photoId;
+                if (photoId == null)
+                {
+                    return Response.AsJson("Wrong photo id.", HttpStatusCode.BadRequest);
+                }
+                var db = new MainContext();
+                ModelPhoto photo = ServicePlace.GetPhotoById(placeId, photoId, db);
+                if (photo == null)
+                {
+                    return Response.AsJson("Photo or place does not exist.", HttpStatusCode.BadRequest);
+                }
+                return Response.AsJson(photo.GetView());
+
+            }
+            catch (InDataError)
+            {
+                return Response.AsJson("Internal server error", HttpStatusCode.InternalServerError);
+            }
+            catch (NotContaining)
+            {
+                return Response.AsJson("Photo not in place", HttpStatusCode.BadRequest);
+            }
         }
 
         private dynamic GetPlacesId(dynamic parameters)

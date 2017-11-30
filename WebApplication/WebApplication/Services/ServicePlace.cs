@@ -68,5 +68,28 @@ namespace WebApplication.Service
             db.SaveChanges();
             return photo;
         }
+
+        public static ModelPhoto GetPhotoById(int? placeId, int? photoId, MainContext db)
+        {
+            ModelPlace place = GetPlaceById(placeId, db);
+            if (place == null)
+            {
+                return null;
+            }
+            var photos = from modelPhoto in db.Photos where modelPhoto.PhotoId == photoId select modelPhoto;
+            if (!photos.Any())
+            {
+                return null;
+            }
+            if (photos.Count() > 1)
+            {
+                throw new InDataError();
+            }
+            if (!place.Photos.Contains(photos.First()))
+            {
+                throw new NotContaining();
+            }
+            return photos.First();
+        }
     }
 }

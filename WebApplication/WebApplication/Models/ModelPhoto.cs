@@ -14,6 +14,15 @@ namespace WebApplication.Models
         public string Url { get; set; }
         public virtual ModelPlace Place { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is ModelPhoto photo)
+            {
+                return photo.PhotoId == PhotoId;
+            }
+            return false;
+        }
+
         public struct View
         {
             public int PhotoId { get; set; }
@@ -25,5 +34,7 @@ namespace WebApplication.Models
         {
             return new View {PhotoId = PhotoId, PlaceId = Place.PlaceId, Url = Url};
         }
+
+
     }
 }
