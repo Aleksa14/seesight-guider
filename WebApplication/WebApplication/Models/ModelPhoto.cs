@@ -11,18 +11,19 @@ namespace WebApplication.Models
         [Key]
         public int PhotoId { get; set; }
 
-        public string FileName { get; set; }
+        public string Url { get; set; }
         public virtual ModelPlace Place { get; set; }
 
         public struct View
         {
             public int PhotoId { get; set; }
             public int PlaceId { get; set; }
+            public string Url { get; set; }
         }
 
         public View GetView()
         {
-            return new View {PhotoId = PhotoId, PlaceId = Place.PlaceId};
+            return new View {PhotoId = PhotoId, PlaceId = Place.PlaceId, Url = Url};
         }
     }
 }

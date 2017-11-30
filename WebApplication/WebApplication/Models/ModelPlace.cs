@@ -17,5 +17,30 @@ namespace WebApplication.Models
         public string Address { get; set; }
         public virtual ModelUser Author { get; set; }
         public virtual ICollection<ModelPhoto> Photos { get; set; } = new HashSet<ModelPhoto>();
+
+        public struct View
+        {
+            public int PlaceId { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public double Rate { get; set; }
+            public string Address { get; set; }
+            public string Author { get; set; }
+            public IEnumerable<int> PhotosId { get; set; }
+        }
+
+        public View GetView()
+        {
+            return new View
+            {
+                PlaceId = PlaceId,
+                Address = Address,
+                Author = Author.UserName,
+                Description = Description,
+                Name = Name,
+                PhotosId = from photo in Photos select photo.PhotoId,
+                Rate = Rate
+            };
+        }
     }
 }

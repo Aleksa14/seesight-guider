@@ -16,6 +16,7 @@ namespace WebApplication
                     .WithHeader("Access-Control-Allow-Methods", "POST,GET, PUT, DELETE")
                     .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type");
             });
+            
         }
 
     }

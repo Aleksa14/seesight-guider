@@ -21,24 +21,43 @@ namespace WebApplication.Controllers
             public string Description;
             public string Address;
         }
-        
+
+        private struct PutPhotoBody
+        {
+            public string Url;
+        }
+
         public ControllerPlace()
         {
             Get["/api/places"] = GetPlaces;
             Get["/api/places/{id}"] = GetPlacesId;
             Put["/api/places/{id}/photos"] = PutPhoto;
             Put["/api/places"] = PutPlace;
-            
         }
 
         private dynamic PutPhoto(dynamic parameters)
         {
-            var photo = this.Request.Files.FirstOrDefault();
-            var placeId = parameters.id;
-            var db = new MainContext();
-            var place = ServicePlace.GetPlaceById(placeId, db);
-            var modelPhoto = ServicePlace.AddPhoto(place, photo, db);
-            return Response.AsJson((ModelPhoto.View)modelPhoto.GetView());
+            try
+            {
+                var body = this.Bind<PutPhotoBody>();
+                if (string.IsNullOrEmpty(body.Url))
+                {
+                    return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
+                }
+                var placeId = parameters.id;
+                var db = new MainContext();
+                var place = ServicePlace.GetPlaceById(placeId, db);
+                if (place == null)
+                {
+                    return Response.AsJson("Place with this id not found.", HttpStatusCode.NotFound);
+                }
+                ModelPhoto photo = ServicePlace.AddPhoto(place, body.Url, db);
+                return Response.AsJson(photo.GetView());
+            }
+            catch (InDataError)
+            {
+                return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
+            }
         }
 
         private dynamic GetPlacesId(dynamic parameters)
@@ -52,7 +71,9 @@ namespace WebApplication.Controllers
                 }
                 var db = new MainContext();
                 var place = ServicePlace.GetPlaceById(placeId, db);
-                return place == null ? Response.AsJson("There is no such place.", HttpStatusCode.NotFound) : Response.AsJson(new ViewModelPlace(place));
+                return place == null
+                    ? Response.AsJson("There is no such place.", HttpStatusCode.NotFound)
+                    : Response.AsJson(place.GetView());
             }
             catch (InDataError)
             {
@@ -68,11 +89,11 @@ namespace WebApplication.Controllers
             {
                 return Response.AsJson(
                     from place in ServicePlace.GetAllPlaces(db)
-                    select new ViewModelPlace(place));
+                    select place.GetView());
             }
             return Response.AsJson(
                 from place in ServicePlace.GetAllPlacesMatchingName(name, db)
-                select new ViewModelPlace(place));
+                select place.GetView());
         }
 
         private dynamic PutPlace(dynamic parameters)
@@ -94,7 +115,7 @@ namespace WebApplication.Controllers
                     return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
                 }
                 var place = ServicePlace.CreatePlace(body.Name, body.Description, body.Address, user, db);
-                return Response.AsJson(new ViewModelPlace(place));
+                return Response.AsJson(place.GetView());
             }
             catch (InDataError)
             {

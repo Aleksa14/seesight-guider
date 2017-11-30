@@ -136,10 +136,14 @@
     <Compile Include="Migrations\201711151917496_SomeFix.Designer.cs">
       <DependentUpon>201711151917496_SomeFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711301857257_add-photo.cs" />
+    <Compile Include="Migrations\201711301857257_add-photo.Designer.cs">
+      <DependentUpon>201711301857257_add-photo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelPhoto.cs" />
     <Compile Include="Models\ModelPlace.cs" />
     <Compile Include="Models\ModelUser.cs" />
-    <Compile Include="Models\ViewModelPlace.cs" />
     <Compile Include="Models\ViewModelUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServicePlace.cs" />
@@ -154,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711151917496_SomeFix.resx">
       <DependentUpon>201711151917496_SomeFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711301857257_add-photo.resx">
+      <DependentUpon>201711301857257_add-photo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
