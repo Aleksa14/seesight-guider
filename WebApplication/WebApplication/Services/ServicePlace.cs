@@ -56,8 +56,12 @@ namespace WebApplication.Service
             return from place in GetAllPlaces(db) where place.Name.Contains(nameFragment) select place;
         }
 
-        public static ModelPhoto AddPhoto(ModelPlace place, string url, MainContext db)
+        public static ModelPhoto AddPhoto(ModelPlace place, ModelUser user, string url, MainContext db)
         {
+            if (!user.Equals(place.Author))
+            {
+                throw new UnauthorizedAccessException();
+            }
             var photo = new ModelPhoto {Place = place, Url = url};
             db.Photos.Add(photo);
             place.Photos.Add(photo);

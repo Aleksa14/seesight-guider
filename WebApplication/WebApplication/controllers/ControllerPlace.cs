@@ -35,31 +35,6 @@ namespace WebApplication.Controllers
             Put["/api/places"] = PutPlace;
         }
 
-        private dynamic PutPhoto(dynamic parameters)
-        {
-            try
-            {
-                var body = this.Bind<PutPhotoBody>();
-                if (string.IsNullOrEmpty(body.Url))
-                {
-                    return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
-                }
-                var placeId = parameters.id;
-                var db = new MainContext();
-                var place = ServicePlace.GetPlaceById(placeId, db);
-                if (place == null)
-                {
-                    return Response.AsJson("Place with this id not found.", HttpStatusCode.NotFound);
-                }
-                ModelPhoto photo = ServicePlace.AddPhoto(place, body.Url, db);
-                return Response.AsJson(photo.GetView());
-            }
-            catch (InDataError)
-            {
-                return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
-            }
-        }
-
         private dynamic GetPlacesId(dynamic parameters)
         {
             try
@@ -107,6 +82,10 @@ namespace WebApplication.Controllers
                 }
                 var db = new MainContext();
                 var user = ServiceUser.GetLoggedUser(userName, db);
+                if (user == null)
+                {
+                    return Response.AsJson("Logged user with bad userName", HttpStatusCode.InternalServerError);
+                }
                 var body = this.Bind<PutPlaceBody>();
                 if (string.IsNullOrEmpty(body.Name) ||
                     string.IsNullOrEmpty(body.Description) ||
@@ -124,6 +103,49 @@ namespace WebApplication.Controllers
             catch (ModelBindingException)
             {
                 return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
+            }
+        }
+
+        private dynamic PutPhoto(dynamic parameters)
+        {
+            try
+            {
+                var userName = (string)Request.Session[ControllerUser.SessionUserNameKey];
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return Response.AsJson("Noone logged in.", HttpStatusCode.Unauthorized);
+                }
+                var db = new MainContext();
+                var user = ServiceUser.GetLoggedUser(userName, db);
+                if (user == null)
+                {
+                    return Response.AsJson("Logged user with bad userName", HttpStatusCode.InternalServerError);
+                }
+                var body = this.Bind<PutPhotoBody>();
+                if (string.IsNullOrEmpty(body.Url))
+                {
+                    return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
+                }
+                var placeId = parameters.id;
+                var place = ServicePlace.GetPlaceById(placeId, db);
+                if (place == null)
+                {
+                    return Response.AsJson("Place with this id not found.", HttpStatusCode.NotFound);
+                }
+                ModelPhoto photo = ServicePlace.AddPhoto(place, user, body.Url, db);
+                return Response.AsJson(photo.GetView());
+            }
+            catch (InDataError)
+            {
+                return HttpStatusCode.InternalServerError;
+            }
+            catch (ModelBindingException)
+            {
+                return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Response.AsJson("You are not author of this place.", HttpStatusCode.Unauthorized);
             }
         }
     }
