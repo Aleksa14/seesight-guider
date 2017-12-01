@@ -27,6 +27,7 @@ namespace WebApplication.Models
         public string PasswordHash { get; set; }
         public UserRoleType UserRole { get; set; } = UserRoleType.NormalUser;
         public virtual ICollection<ModelPlace> OwnedPlaces { get; set; } = new HashSet<ModelPlace>();
+        public virtual ICollection<ModelRate> Rates { get; set; } = new HashSet<ModelRate>();
 
         public override bool Equals(object obj)
         {
@@ -44,6 +45,7 @@ namespace WebApplication.Models
             public string Email { get; set; }
             public ModelUser.UserRoleType UserRole { get; set; }
             public IEnumerable<int> OwnedPlacesId { get; set; }
+            public IEnumerable<ModelRate.View> Rates { get; set; }
         }
 
         public View GetView()
@@ -54,7 +56,8 @@ namespace WebApplication.Models
                 UserName = UserName,
                 Email = Email,
                 UserRole = UserRole,
-                OwnedPlacesId = from place in OwnedPlaces select place.PlaceId
+                OwnedPlacesId = from place in OwnedPlaces select place.PlaceId,
+                Rates = from rate in Rates select rate.GetView()
             };
         }
     }

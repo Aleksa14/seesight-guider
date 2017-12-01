@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using Nancy;
 using WebApplication.Contexts;
@@ -90,6 +91,40 @@ namespace WebApplication.Service
                 throw new NotContaining();
             }
             return photos.First();
+        }
+
+        public static void RatePlace(int? placeId, ModelUser user, int rate, MainContext db)
+        {
+            if (rate < 0 || rate > 5)
+            {
+                throw new WrongDataException();
+            }
+            var place = GetPlaceById(placeId, db);
+            if (place == null)
+            {
+                throw new PlaceDontExistsException();
+            }
+            var placeRates = from rateModel in user.Rates where place.PlaceId == rateModel.RatedPlace.PlaceId select rateModel;
+            var placeRatesList = placeRates as IList<ModelRate> ?? placeRates.ToList();
+            if (!placeRatesList.Any())
+            {
+                var newRate = new ModelRate {Rate = rate, RatedPlace = place};
+                db.Rates.Add(newRate);
+                user.Rates.Add(newRate);
+            }
+            else
+            {
+                if (placeRatesList.Count() == 1)
+                {
+                    placeRatesList.First().Rate = rate;
+                }
+                else
+                {
+                    throw new InDataError();
+                }
+            }
+            place.UpdateRate(db.Rates.Where(rateModel => place.PlaceId == rateModel.RatedPlace.PlaceId));
+            db.SaveChanges();
         }
     }
 }

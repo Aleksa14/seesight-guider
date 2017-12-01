@@ -27,6 +27,11 @@ namespace WebApplication.Controllers
             public string Url;
         }
 
+        private struct PutRateBody
+        {
+            public int rate;
+        }
+
         public ControllerPlace()
         {
             Get["/api/places"] = GetPlaces;
@@ -34,6 +39,45 @@ namespace WebApplication.Controllers
             Get["/api/places/{id}/photos/{photoId}"] = GetPhotoById;
             Put["/api/places/{id}/photos"] = PutPhoto;
             Put["/api/places"] = PutPlace;
+            Put["/api/places/{id}/rate"] = PutRate;
+        }
+
+        private dynamic PutRate(dynamic parameters)
+        {
+            try
+            {
+                var userName = (string) this.Request.Session[ControllerUser.SessionUserNameKey];
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return Response.AsJson("Noone logged in.", HttpStatusCode.Unauthorized);
+                }
+                var placeId = (int?) parameters.id;
+                if (placeId == null)
+                {
+                    return Response.AsJson("Wrong place id.", HttpStatusCode.BadRequest);
+                }
+                var db = new MainContext();
+                var user = ServiceUser.GetLoggedUser(userName, db);
+                if (user == null)
+                {
+                    return Response.AsJson("Logged user with bad userName", HttpStatusCode.InternalServerError);
+                }
+                var rate = this.Bind<PutRateBody>().rate;
+                ServicePlace.RatePlace(placeId, user, rate, db);
+                return Response.AsJson("Rated", HttpStatusCode.OK);
+            }
+            catch (InDataError)
+            {
+                return Response.AsJson("Internal server error", HttpStatusCode.InternalServerError);
+            }
+            catch (PlaceDontExistsException)
+            {
+                return Response.AsJson("Place don't exists", HttpStatusCode.BadRequest);
+            }
+            catch (WrongDataException)
+            {
+                return Response.AsJson("Rate not in range [0, 5]", HttpStatusCode.BadRequest);
+            }
         }
 
         private dynamic GetPhotoById(dynamic parameters)

@@ -17,5 +17,6 @@ namespace WebApplication.Contexts
         public DbSet<ModelUser> Users { get; set; }
         public DbSet<ModelPlace> Places { get; set; }
         public DbSet<ModelPhoto> Photos { get; set; }
+        public DbSet<ModelRate> Rates { get; set; }
     }
 }

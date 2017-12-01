@@ -42,5 +42,27 @@ namespace WebApplication.Models
                 Rate = Rate
             };
         }
+
+        public void UpdateRate(IEnumerable<ModelRate> rates)
+        {
+            var ratesList = rates as IList<ModelRate> ?? rates.ToList();
+            if (!ratesList.Any()) return;
+            var sum = 0;
+            foreach (var rate in ratesList)
+            {
+                sum += rate.Rate;
+            }
+            Rate = (double) sum / ratesList.Count();
+            System.Console.WriteLine("New rate " + Rate);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ModelPlace place)
+            {
+                return place.PlaceId == PlaceId;
+            }
+            return false;
+        }
     }
 }
