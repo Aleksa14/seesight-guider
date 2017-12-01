@@ -57,7 +57,6 @@ namespace WebApplication.Controllers
                     return Response.AsJson("Photo or place does not exist.", HttpStatusCode.BadRequest);
                 }
                 return Response.AsJson(photo.GetView());
-
             }
             catch (InDataError)
             {
