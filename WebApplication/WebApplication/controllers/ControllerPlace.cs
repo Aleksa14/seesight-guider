@@ -21,6 +21,7 @@ namespace WebApplication.Controllers
             public string Address;
             public double? Latitude;
             public double? Longitude;
+            public ICollection<string> Photos;
         }
 
         private struct PostPhotoBody
@@ -222,11 +223,16 @@ namespace WebApplication.Controllers
                     string.IsNullOrEmpty(body.Description) ||
                     string.IsNullOrEmpty(body.Address) ||
                     body.Latitude == null ||
-                    body.Longitude == null)
+                    body.Longitude == null ||
+                    body.Photos == null)
                 {
                     return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
                 }
                 var place = ServicePlace.CreatePlace(body.Name, body.Description, body.Address, (double) body.Latitude, (double) body.Longitude, user, db);
+                foreach (var link in body.Photos)
+                {
+                    ServicePlace.AddPhoto(place, user, link, db);
+                }
                 return Response.AsJson(place.GetView());
             }
             catch (InDataError)
