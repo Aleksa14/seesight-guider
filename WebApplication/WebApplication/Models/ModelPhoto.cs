@@ -32,7 +32,12 @@ namespace WebApplication.Models
 
         public View GetView()
         {
-            return new View {PhotoId = PhotoId, PlaceId = Place.PlaceId, Url = Url};
+            return new View
+            {
+                PhotoId = PhotoId,
+                PlaceId = Place.PlaceId,
+                Url = Url
+            };
         }
 
 

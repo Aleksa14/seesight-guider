@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApplication.Exeptions
 {
-    public class PlaceDontExistsException : Exception
+    public class NooneLoggedInException : Exception
     {
     }
 }

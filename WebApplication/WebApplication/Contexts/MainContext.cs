@@ -18,5 +18,6 @@ namespace WebApplication.Contexts
         public DbSet<ModelPlace> Places { get; set; }
         public DbSet<ModelPhoto> Photos { get; set; }
         public DbSet<ModelRate> Rates { get; set; }
+        public DbSet<ModelComment> Comments { get; set; }
     }
 }
