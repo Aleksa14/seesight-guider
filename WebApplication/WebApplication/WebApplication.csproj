@@ -123,8 +123,12 @@
     <Compile Include="Controllers\ControllerUser.cs" />
     <Compile Include="Contexts\MainContext.cs" />
     <Compile Include="Exeptions\InDataError.cs" />
+    <Compile Include="Exeptions\LoggedUserDoesNotExists.cs" />
+    <Compile Include="Exeptions\NooneLoggedInException.cs" />
     <Compile Include="Exeptions\NotContaining.cs" />
+    <Compile Include="Exeptions\PlaceDoesNotExistsException.cs" />
     <Compile Include="Exeptions\UserCreationExeption.cs" />
+    <Compile Include="Exeptions\WrongDataException.cs" />
     <Compile Include="Migrations\201711132250313_User.cs" />
     <Compile Include="Migrations\201711132250313_User.Designer.cs">
       <DependentUpon>201711132250313_User.cs</DependentUpon>
@@ -145,9 +149,27 @@
     <Compile Include="Migrations\201711302133010_dont-know.Designer.cs">
       <DependentUpon>201711302133010_dont-know.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712012251182_Rates.cs" />
+    <Compile Include="Migrations\201712012251182_Rates.Designer.cs">
+      <DependentUpon>201712012251182_Rates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712021500587_Comments.cs" />
+    <Compile Include="Migrations\201712021500587_Comments.Designer.cs">
+      <DependentUpon>201712021500587_Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712021600203_Comment-2.cs" />
+    <Compile Include="Migrations\201712021600203_Comment-2.Designer.cs">
+      <DependentUpon>201712021600203_Comment-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712061519369_Add-Coordinates.cs" />
+    <Compile Include="Migrations\201712061519369_Add-Coordinates.Designer.cs">
+      <DependentUpon>201712061519369_Add-Coordinates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ModelComment.cs" />
     <Compile Include="Models\ModelPhoto.cs" />
     <Compile Include="Models\ModelPlace.cs" />
+    <Compile Include="Models\ModelRate.cs" />
     <Compile Include="Models\ModelUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ServicePlace.cs" />
@@ -168,6 +190,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711302133010_dont-know.resx">
       <DependentUpon>201711302133010_dont-know.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712012251182_Rates.resx">
+      <DependentUpon>201712012251182_Rates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712021500587_Comments.resx">
+      <DependentUpon>201712021500587_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712021600203_Comment-2.resx">
+      <DependentUpon>201712021600203_Comment-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712061519369_Add-Coordinates.resx">
+      <DependentUpon>201712061519369_Add-Coordinates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

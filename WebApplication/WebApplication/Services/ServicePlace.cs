@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
-using Nancy;
 using WebApplication.Contexts;
 using WebApplication.Exeptions;
-using WebApplication.Migrations;
 using WebApplication.Models;
 
-namespace WebApplication.Service
+namespace WebApplication.Services
 {
     public class ServicePlace
     {
-        public static ModelPlace CreatePlace(string name, string description, string address, ModelUser loggedUser,
+        public static ModelPlace CreatePlace(string name, string description, string address, double latitude,
+            double longitude, ModelUser loggedUser,
             MainContext db)
         {
             var place = new ModelPlace
@@ -21,7 +18,9 @@ namespace WebApplication.Service
                 Name = name,
                 Description = description,
                 Address = address,
-                Author = loggedUser
+                Author = loggedUser,
+                Latitude = latitude,
+                Longitude = longitude
             };
             loggedUser.OwnedPlaces.Add(place);
             db.Places.Add(place);
@@ -90,6 +89,56 @@ namespace WebApplication.Service
                 throw new NotContaining();
             }
             return photos.First();
+        }
+
+        public static void RatePlace(int? placeId, ModelUser user, int rate, MainContext db)
+        {
+            if (rate < 0 || rate > 5)
+            {
+                throw new WrongDataException();
+            }
+            var place = GetPlaceById(placeId, db);
+            if (place == null)
+            {
+                throw new PlaceDoesNotExistsException();
+            }
+            var placeRates = from rateModel in user.Rates
+                where place.PlaceId == rateModel.RatedPlace.PlaceId
+                select rateModel;
+            var placeRatesList = placeRates as IList<ModelRate> ?? placeRates.ToList();
+            if (!placeRatesList.Any())
+            {
+                var newRate = new ModelRate {Rate = rate, RatedPlace = place};
+                db.Rates.Add(newRate);
+                user.Rates.Add(newRate);
+            }
+            else
+            {
+                if (placeRatesList.Count == 1)
+                {
+                    placeRatesList.First().Rate = rate;
+                }
+                else
+                {
+                    throw new InDataError();
+                }
+            }
+            place.UpdateRate(db.Rates.Where(rateModel => place.PlaceId == rateModel.RatedPlace.PlaceId));
+            db.SaveChanges();
+        }
+
+        public static ModelComment AddComment(int? placeId, ModelUser user, string message, MainContext db)
+        {
+            var place = GetPlaceById(placeId, db);
+            if (place == null)
+            {
+                throw new PlaceDoesNotExistsException();
+            }
+            ModelComment comment = new ModelComment {Author = user, CommentMessage = message, Place = place};
+            db.Comments.Add(comment);
+            place.Comments.Add(comment);
+            db.SaveChanges();
+            return comment;
         }
     }
 }
