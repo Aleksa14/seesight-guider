@@ -18,6 +18,7 @@ namespace WebApplication
                     .WithHeader("Access-Control-Expose-Headers", "Accept, Origin, Content-type, Credentials")
                     .WithHeader("Access-Control-Allow-Credentials", "true");
             });
+            
         }
 
     }

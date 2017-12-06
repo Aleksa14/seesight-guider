@@ -58,7 +58,7 @@ namespace WebApplication.Controllers
             }
 
             Request.Session[SessionUserNameKey] = user.UserName;
-            return Response.AsJson(new ViewModelUser(user));
+            return Response.AsJson(user.GetView());
             
         }
 
