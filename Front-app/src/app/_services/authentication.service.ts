@@ -20,6 +20,7 @@ export class AuthenticationService {
             url: this.host + 'api/user-auth',
             headers: header,
             body: JSON.stringify({username: user.username, password: user.password}),
+            withCredentials: true
         });
         return this.http.request(new Request(option))
             .map((response: Response) => {

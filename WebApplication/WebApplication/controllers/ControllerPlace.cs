@@ -170,11 +170,7 @@ namespace WebApplication.Controllers
         {
             try
             {
-                var placeId = (int?) parameters.id;
-                if (placeId == null)
-                {
-                    return Response.AsJson("Body not completed.", HttpStatusCode.BadRequest);
-                }
+                var placeId = (int) parameters.id;
                 var db = new MainContext();
                 var place = ServicePlace.GetPlaceById(placeId, db);
                 return place == null
@@ -206,10 +202,11 @@ namespace WebApplication.Controllers
         {
             try
             {
-                var userName = (string) Request.Session[ControllerUser.SessionUserNameKey];
+                var userName = (string) this.Request.Session[ControllerUser.SessionUserNameKey];
                 if (string.IsNullOrEmpty(userName))
                 {
-                    return Response.AsJson("Noone logged in.", HttpStatusCode.Unauthorized);
+                    Console.WriteLine("No i dupa");
+                    return Response.AsJson("Noone logged in.", HttpStatusCode.NotFound);
                 }
                 var db = new MainContext();
                 var user = ServiceUser.GetLoggedUser(userName, db);

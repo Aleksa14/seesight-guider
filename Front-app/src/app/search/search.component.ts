@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-//import {  } from '../_services/index';
+import { Place } from '../_models/index'
+import { PlaceService, AlertService } from '../_services/index';
 
 @Component({
     templateUrl: './search.component.html'
@@ -10,6 +9,21 @@ import { Router } from '@angular/router';
 export class SearchComponent {
 
     searched: boolean;
+    placeTable: Place[];
+    word: string;
 
+    constructor(
+        private placeService: PlaceService,
+        private alertService: AlertService) {
+        this.searched = false;
+    }
+
+    search(){
+        this.searched = true;
+        this.placeService.getPlaces(this.word).subscribe(
+            (placeTable) => { this.placeTable = placeTable; },
+            error => { this.alertService.error(error.message);}
+        )
+    }
 
 }
