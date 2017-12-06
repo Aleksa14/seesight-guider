@@ -13,7 +13,7 @@ const appRoutes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'searching', component: SearchComponent},
     { path: 'adding', component: AddingPlaceComponent},
-    { path: 'place/:id', component: PlaceViewComponent},
+    { path: 'place/:placeId', component: PlaceViewComponent},
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }

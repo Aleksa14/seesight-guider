@@ -5,7 +5,7 @@ h1 {
 }
 
 html {
-  background: url("https://www.fru.pl/media/img/uploaded/packages/top10/attractions/rom/koloseum2.jpg") no-repeat center center fixed;
+  background: url(http://travelhdwallpapers.com/wp-content/uploads/2014/02/Colosseum-4.jpg) no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -16,6 +16,14 @@ html {
 .alert {
   padding: 10px 15px 10px 15px;
   margin-bottom: 0px;
+}
+
+a {
+  cursor: pointer;
+}
+
+.help-block {
+  font-size: 12px;
 }
 
 body {
@@ -45,4 +53,29 @@ body {
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 20px;
+}
+
+p {
+  text-align: justify;
+}
+
+h2, h1, h3, h4, h5 {
+  color: #fff6fa;
+  font-weight: bold;
+}
+
+label, p, td, th {
+  color: #fff6fa;
+}
+
+#component-template {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+}
+ .table {
+   width: 95%;
+ }
+
+tr:hover td {
+  background-color: rgba(0, 0, 0, 0.4);
 }

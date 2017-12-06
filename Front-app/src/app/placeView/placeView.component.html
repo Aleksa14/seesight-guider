@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" *ngIf="place">
     <h2>{{place.name}}</h2>
     <p>{{place.description}}</p>
+    <p><label>Author:</label> {{place.author}}</p>
 </div>

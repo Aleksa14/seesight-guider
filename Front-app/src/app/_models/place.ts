@@ -1,7 +1,7 @@
 export class Place {
-    id: number;
+    placeId: number;
     name: string;
     description: string
     address: string;
-    autor: string;
+    author: string;
 }

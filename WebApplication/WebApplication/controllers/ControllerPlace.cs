@@ -10,7 +10,7 @@ using WebApplication.Models;
 using WebApplication.Service;
 using WebApplication.Services;
 
-namespace WebApplication.controllers
+namespace WebApplication.Controllers
 {
     public class ControllerPlace : NancyModule
     {
@@ -24,8 +24,24 @@ namespace WebApplication.controllers
         public ControllerPlace()
         {
             Get["/api/places"] = GetPlaces;
+            Get["/api/places/{id}"] = GetPlacesId;
             Put["/api/places"] = PutPlace;
             
+        }
+
+        private dynamic GetPlacesId(dynamic parameters)
+        {
+            try
+            {
+                var placeId = (int) parameters.id;
+                var db = new MainContext();
+                var place = ServicePlace.GetPlaceById(placeId, db);
+                return place == null ? Response.AsJson("There is no such place.", HttpStatusCode.NotFound) : Response.AsJson(new ViewModelPlace(place));
+            }
+            catch (InDataError)
+            {
+                return Response.AsJson("Internal server error", HttpStatusCode.InternalServerError);
+            }
         }
 
         private dynamic GetPlaces(dynamic parameters)
@@ -47,10 +63,12 @@ namespace WebApplication.controllers
         {
             try
             {
-                var userName = (string) this.Request.Session[UserController.SessionUserNameKey];
+                Console.WriteLine("Jeszcze nie dupa");
+                var userName = (string) this.Request.Session[ControllerUser.SessionUserNameKey];
                 if (string.IsNullOrEmpty(userName))
                 {
-                    return Response.AsJson("Noone logged in.", HttpStatusCode.Unauthorized);
+                    Console.WriteLine("No i dupa");
+                    return Response.AsJson("Noone logged in.", HttpStatusCode.NotFound);
                 }
                 var db = new MainContext();
                 var user = ServiceUser.GetLoggedUser(userName, db);

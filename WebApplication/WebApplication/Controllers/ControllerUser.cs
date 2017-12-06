@@ -11,10 +11,10 @@ using WebApplication.Contexts;
 using WebApplication.Exeptions;
 using WebApplication.Models;
 
-namespace WebApplication.controllers
+namespace WebApplication.Controllers
 {
 
-    public class UserController : NancyModule
+    public class ControllerUser : NancyModule
     {
         public const string SessionUserNameKey = "username";
         private struct PostUserBody
@@ -29,7 +29,7 @@ namespace WebApplication.controllers
             public string Password { get; set; }
         }
 
-        public UserController()
+        public ControllerUser()
         {
             Post["/api/users/{username}"] = PostUser;
             Post["/api/user-auth"] = AuthenticateUser;
