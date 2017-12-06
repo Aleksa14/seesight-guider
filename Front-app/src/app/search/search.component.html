@@ -1,28 +1,28 @@
 <div class="col-md-6 col-md-offset-3">
     <form>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search place" name="search">
+            <input type="text" class="form-control" placeholder="Search place" name="search" [(ngModel)]="word">
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                <button class="btn btn-default" type="submit" (click)="search()"><i class="glyphicon glyphicon-search"></i></button>
             </div>
         </div>
     </form>
 </div>
-    <div class="container">
-        <table class="table">
+    <div class="container" *ngIf="searched">
+
+        <table class="table table-hover">
             <thead>
             <tr>
-                <th>Image</th>
                 <th>Name</th>
                 <th>Location</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john@example.com</td>
+            <tr *ngFor="let p of placeTable">
+                <td [routerLink]="['/place/', p.placeId]">{{p.name}}</td>
+                <td [routerLink]="['/place/', p.placeId]">{{p.address}}</td>
             </tr>
             </tbody>
         </table>
+
     </div>

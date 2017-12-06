@@ -12,7 +12,8 @@ import { AlertComponent } from './_directives/index';
 import { SearchComponent } from './search/index';
 import { AuthGuard } from "./_guards/index";
 import { UserService, AuthenticationService, AlertService, PlaceService } from "./_services/index";
-import {AddingPlaceComponent} from "./addingPlace/addingPlace.component";
+import { AddingPlaceComponent } from "./addingPlace/index";
+import { PlaceViewComponent } from "./placeView/index"
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {AddingPlaceComponent} from "./addingPlace/addingPlace.component";
                   NavbarComponent,
                   AlertComponent,
                   SearchComponent,
-                  AddingPlaceComponent],
+                  AddingPlaceComponent,
+                  PlaceViewComponent],
   providers: [ AuthGuard,
                 AlertService,
                 AuthenticationService,
