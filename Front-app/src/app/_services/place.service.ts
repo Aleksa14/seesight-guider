@@ -19,7 +19,7 @@ export class PlaceService {
 
     add(place: Place) {
         let options = new RequestOptions({
-            method: RequestMethod.Put,
+            method: RequestMethod.Post,
             url: this.host + 'api/places',
             headers: this.getHeader(),
             body: JSON.stringify(place),
@@ -49,6 +49,30 @@ export class PlaceService {
             method: RequestMethod.Get,
             url: this.host + 'api/places/' + id,
             headers: this.getHeader(),
+            withCredentials: true
+        });
+        return this.http.request(new Request(options))
+            .map((response: Response) => response.json());
+    }
+
+    postRate(id: number, rate: number){
+        let options = new RequestOptions({
+            method: RequestMethod.Post,
+            url: this.host + 'api/places/'+id+'/rate',
+            headers: this.getHeader(),
+            body: JSON.stringify({rate: rate}),
+            withCredentials: true
+        });
+        return this.http.request(new Request(options))
+            .map((response: Response) => response.json());
+    }
+
+    addComment(id: number, msg: String){
+        let options = new RequestOptions({
+            method: RequestMethod.Post,
+            url: this.host + '/api/places/'+id+'/comments',
+            headers: this.getHeader(),
+            body: JSON.stringify({message: msg}),
             withCredentials: true
         });
         return this.http.request(new Request(options))

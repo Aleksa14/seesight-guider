@@ -1,5 +1,24 @@
 <div class="container" *ngIf="place">
     <h2>{{place.name}}</h2>
-    <p>{{place.description}}</p>
+    <div *ngFor="let p of place.photos">
+        <img [src]="p.url" class="img-rounded">
+    </div>
+    <star-rating-comp [starType]="'svg'" [rating]="place.rate" [size]="'large'" (onClick)="onClick($event)"></star-rating-comp>
+    <textarea [readonly]="true" rows="5" style="width: 95%">{{place.description}}</textarea>
     <p><label>Author:</label> {{place.author}}</p>
+
+    <agm-map [latitude]="place.latitude" [longitude]="place.longitude" [zoom]="zoom" [scrollwheel]="false"
+             style="height: 300px; width: 95%">
+        <agm-marker [latitude]="place.latitude" [longitude]="place.longitude"></agm-marker>
+    </agm-map>
+
+    <h2>Comments</h2>
+    <div class="form-group">
+        <textarea name="comment" class="form-control" rows="5" id="comment" [(ngModel)]="comment" style="width: 95%"></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="addComment()">Add</button>
+    <div *ngFor="let c of place.comments">
+        <h5>{{c.author}}</h5>
+        <div id="commentView" class="well well-sm">{{c.commentMessage}}</div>
+    </div>
 </div>

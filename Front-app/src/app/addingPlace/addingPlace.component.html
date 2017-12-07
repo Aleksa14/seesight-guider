@@ -1,24 +1,34 @@
 <div class="col-md-8 col-md-offset-2">
     <h2>Adding place worth visiting</h2>
-    <form name="form" (ngSubmit)="f.form.valid && add()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+    <form [formGroup]="form" name="form" (ngSubmit)="add()" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted}">
             <label for="name">Name</label>
-            <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" required />
-            <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+            <input type="text" class="form-control" name="name" formControlName="name" required/>
+            <!--<div *ngIf="f.submitted && name.valid" class="help-block">Name is required</div>-->
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted}">
             <label for="description">Description</label>
-            <textarea class="form-control" rows="5" name="description" [(ngModel)]="model.description" #description="ngModel" required></textarea>
-            <div *ngIf="f.submitted && !description.valid" class="help-block">Description is required</div>
+            <textarea class="form-control" rows="5" name="description" formControlName="description"
+                      required></textarea>
+            <!--<div *ngIf="f.submitted " class="help-block">Description is required</div>-->
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
-            <label for="address">Location</label>
-            <input type="text" class="form-control" name="address" [(ngModel)]="model.address" #address="ngModel" required />
-            <div *ngIf="f.submitted && !address.valid" class="help-block">Location is required</div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted}">
+            <label for="search">Location</label>
+            <input name="search" placeholder="search for location" autocorrect="off" autocapitalize="off"
+                   spellcheck="off" type="text" class="form-control" #search>
+            <!--<div *ngIf="f.submitted " class="help-block">Location is required</div>-->
+        </div>
+        <div formArrayName="photos">
+            <div *ngFor="let p of photos.controls; index as i">
+                    <label for="photos">Link to photo</label>
+                    <input type="text" class="form-control" [formControlName]="i" required/>
+                    <!--<div *ngIf="f.submitted " class="help-block">Picture is required</div>-->
+            </div>
         </div>
         <div class="form-group">
             <button [disabled]="loading" class="btn btn-primary">Add</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <img *ngIf="loading"
+                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
         </div>
     </form>
 </div>

@@ -2,6 +2,8 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from '@agm/core';
+import { StarRatingModule } from 'angular-star-rating';
 
 import { routing } from './app.routing';
 import { AppComponent }  from './app.component';
@@ -21,7 +23,12 @@ import { PlaceViewComponent } from "./placeView/index"
                   FormsModule,
                   ReactiveFormsModule,
                   HttpModule,
-                  routing],
+                  routing,
+                  AgmCoreModule.forRoot({
+                      apiKey: 'AIzaSyCpIT5UCiWv_vXt04wzBKcVrHfgPwEufZ8',
+                      libraries: ["places"]
+                  }),
+                  StarRatingModule.forRoot()],
   declarations: [ AppComponent,
                   LoginComponent,
                   RegisterComponent,
